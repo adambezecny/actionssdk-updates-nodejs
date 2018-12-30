@@ -38,6 +38,10 @@
         },
         "intent": {
           "name": "tell.latest.tip",
+          "parameters": [{
+            "name": "category",
+            "type": "org.schema.type.Text"
+          }],
           "trigger": {
             "queryPatterns": [
               "the latest tip"
@@ -59,22 +63,22 @@
     "conversations": {
       "welcome": {
         "name": "welcome",
-        "url": "YOUR_ENDPOINT_URL",
+        "url": "https://us-central1-actionssdk-updates.cloudfunctions.net/aogTips",
         "fulfillmentApiVersion": 2
       },
       "tellTip": {
         "name": "tellTip",
-        "url": "YOUR_ENDPOINT_URL",
+        "url": "https://us-central1-actionssdk-updates.cloudfunctions.net/aogTips",
         "fulfillmentApiVersion": 2
       },
       "tellLatestTip": {
         "name": "tellLatestTip",
-        "url": "YOUR_ENDPOINT_URL",
+        "url": "https://us-central1-actionssdk-updates.cloudfunctions.net/aogTips",
         "fulfillmentApiVersion": 2
       },
       "configureUpdate": {
         "name": "configureUpdate",
-        "url": "YOUR_ENDPOINT_URL",
+        "url": "https://us-central1-actionssdk-updates.cloudfunctions.net/aogTips",
         "fulfillmentApiVersion": 2
       }
     }

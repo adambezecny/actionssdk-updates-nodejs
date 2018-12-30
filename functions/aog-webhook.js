@@ -43,7 +43,7 @@ const Parameters = {
 const RANDOM_CATEGORY = 'random';
 const RECENT_TIP = 'most recent';
 const CATEGORIES = 'categories';
-const DAILY_NOTIFICATION_SUGGESTION = 'Register for daily updates';
+const DAILY_NOTIFICATION_SUGGESTION = 'Daily updates';
 const ASK_CATEGORY_FLAG = 'ask_category';
 const PUSH_NOTIFICATION_SUGGESTION = 'Alert me of new tips';
 const DAILY_NOTIFICATION_ASKED = 'daily_notification_asked';
@@ -110,14 +110,17 @@ function renderCategories(conv) {
  * @return {Promise}
  */
 function tellRandomTip(conv, category) {
+  console.log(22222266667777)
   console.log('tellRandomTip for category - ' + category);
   return getRandomTip(category)
   .then(renderTip.bind(null, conv))
   .then(() => {
-    if (!conv.user.storage[DAILY_NOTIFICATION_ASKED]) {
+    // if (!conv.user.storage[DAILY_NOTIFICATION_ASKED]) {
+      console.log('sending daily tip opt-in...')
       conv.ask(new Suggestions(DAILY_NOTIFICATION_SUGGESTION));
-      conv.user.storage[DAILY_NOTIFICATION_ASKED] = true;
-    }
+      console.log('daily tip opt-in sent!')
+      // conv.user.storage[DAILY_NOTIFICATION_ASKED] = true;
+    // }
   });
 }
 
@@ -125,15 +128,17 @@ function tellRandomTip(conv, category) {
  * @param {Conversation} conv
  * @return {Promise}
  */
-function tellLatestTip(conv) {
+function tellLatestTip(conv, category) {
   console.log('tellLatestTip ');
+  console.log(333)
+  console.log('category=' + category)
   return getLatestTip()
   .then(renderTip.bind(null, conv))
   .then(() => {
-    if (!conv.user.storage[PUSH_NOTIFICATION_ASKED]) {
+    //if (!conv.user.storage[PUSH_NOTIFICATION_ASKED]) {
       conv.ask(new Suggestions(PUSH_NOTIFICATION_SUGGESTION));
-      conv.user.storage[PUSH_NOTIFICATION_ASKED] = true;
-    }
+      //conv.user.storage[PUSH_NOTIFICATION_ASKED] = true;
+    //}
   });
 }
 
@@ -145,7 +150,12 @@ function tellLatestTip(conv) {
 function askPermissionToNotify(conv) {
   // NOTE: User notification must be first enabled in the Actions Console.
   // Actions -> <Action> -> User updates and notifications.
-  conv.ask(new UpdatePermission({intent: 'tell.latest.tip'}));
+  conv.ask(new UpdatePermission(
+    {
+      intent: 'tell.latest.tip',
+      arguments: [{name: Parameters.CATEGORY, textValue: 'adam was here'}]
+    }
+  ));
 }
 
 /**
@@ -259,6 +269,7 @@ function handleMain(conv) {
  * Action to tell a random tip.
  */
 app.intent('tell.tip', (conv) => {
+  console.log(1111111)
   return tellRandomTip(conv);
 });
 
